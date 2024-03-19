@@ -2,8 +2,8 @@ const MY_KEY = process.env.MY_KEY;
 
 if (MY_KEY) {
   console.log("Successfully retrieved secret key:", MY_KEY);
-  // Here you can perform actions with the secret key
-  // For demonstration, let's just print it out
+  document.write("<p>Successfully retrieved secret key: " + MY_KEY + "</p>");
 } else {
-  console.log("Failed to retrieve secret key");
+  console.error("Failed to retrieve secret key");
+  document.write("<p>Failed to retrieve secret key</p>");
 }
