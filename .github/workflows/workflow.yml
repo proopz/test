@@ -1,19 +1,32 @@
-name: Access Secret Key Workflow
-on: [push]
+name: Inject Secret Key into HTML
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20'
-    - name: Access Secret Key
-      run: echo "MY_KEY=$MY_KEY" >> $GITHUB_ENV
-      env:
-        MY_KEY: ${{ secrets.MY_KEY }}
-    - name: Run JavaScript file
-      run: node th.js
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      
+      - name: Inject secret key into HTML
+        run: echo "<script>window.MY_KEY='${{ secrets.MY_KEY }}';</script>" >> ind.html
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add ind.html
+          git commit -m "Inject secret key into HTML"
+      
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
