@@ -3,14 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Access Secret Key Demo</title>
+  <title>Data Validation Demo</title>
 </head>
 <body>
-  <h1>Access Secret Key Demo</h1>
-  <div id="message"></div>
-  <script src="th.js"></script>
+  <h1>Data Validation Demo</h1>
+  <div id="validation-message"></div>
+  <script src="validation.js"></script>
   <script>
-    console.log("Secret key:", window.MY_KEY);
+    // Access the validateData function from the JavaScript module
+    import { validateData } from './validation.js';
+
+    // Data to validate
+    const dataToValidate = "Data";
+
+    // Perform validation
+    const isValid = validateData(dataToValidate);
+
+    // Display validation message
+    const validationMessageElement = document.getElementById("validation-message");
+    if (isValid) {
+      validationMessageElement.textContent = "Data is valid.";
+    } else {
+      validationMessageElement.textContent = "Data is not valid.";
+    }
   </script>
 </body>
 </html>
